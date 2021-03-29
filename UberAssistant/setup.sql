@@ -1,4 +1,4 @@
-create table restaurant(id serial primary key, name varchar(200) not null, rating numeric(4,2) not null default 4, open_time varchar(10) not null, closing_time varchar(10) not null, cost_for_one integer not null, image_url varchar(300));
+create table restaurant(id serial primary key, name varchar(200) not null, rating numeric(4,2) not null default 4, open_time varchar(10) not null, closing_time varchar(10) not null, cost_for_one integer not null, image_url varchar(300), res_tables integer not null default 0);
 insert into restaurant values(1,'Hauz Khas Social',4.2,'10:00','20:00',420,'https://image-url.net');
 create table user_details(id serial primary key, name varchar(200) not null, email varchar(200) not null);
 insert into user_details values(1,'Test','test@gmail.com');

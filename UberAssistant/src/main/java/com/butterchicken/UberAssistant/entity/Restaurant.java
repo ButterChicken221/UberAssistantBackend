@@ -27,5 +27,8 @@ public class Restaurant extends AbstractEntity{
     private Integer costForOne;
 
     @Column(name = "image_url")
-    private String image_url;
+    private String imageUrl;
+
+    @Column(name = "res_tables")
+    private Integer resTables;
 }
