@@ -39,7 +39,7 @@ public class ReservationServiceImpl implements ReservationService {
             try {
                 firebaseMessagingService.sendNotification(note, defaultFirebaseToken);
             }catch (FirebaseMessagingException e){
-                System.out.println(e.getStackTrace());
+                e.printStackTrace();
             }
         }
         return reservation;
@@ -48,5 +48,10 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<Reservation> getUpcomingRestaurantReservations(Integer restaurantId) {
         return reservationRepo.findByRestaurantIdAndReservationTimeGreaterThan(restaurantId, LocalDateTime.now());
+    }
+
+    @Override
+    public Reservation findNextReservationForUser(Integer userId) {
+        return reservationRepo.findFirstByUserIdAndReservationTimeGreaterThanOrderByReservationTimeAsc(userId, LocalDateTime.now());
     }
 }

@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Builder(toBuilder = true)
@@ -32,9 +32,9 @@ public class RideDto {
 
     private Double fare;
 
-    private Date startTime;
+    private LocalDateTime startTime;
 
-    private Date endTime;
+    private LocalDateTime endTime;
 
     private Integer cabTypeCode;
 

@@ -11,4 +11,6 @@ import java.util.List;
 public interface ReservationRepo extends JpaRepository<Reservation, Integer> {
 
     List<Reservation> findByRestaurantIdAndReservationTimeGreaterThan(Integer restaurantId, LocalDateTime date);
+
+    Reservation findFirstByUserIdAndReservationTimeGreaterThanOrderByReservationTimeAsc(Integer userId, LocalDateTime now);
 }

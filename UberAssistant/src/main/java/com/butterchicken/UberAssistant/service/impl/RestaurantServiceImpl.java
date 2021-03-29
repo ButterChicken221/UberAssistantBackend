@@ -1,6 +1,7 @@
 package com.butterchicken.UberAssistant.service.impl;
 
 import com.butterchicken.UberAssistant.dto.RestaurantDto;
+import com.butterchicken.UberAssistant.dto.RideDto;
 import com.butterchicken.UberAssistant.entity.Reservation;
 import com.butterchicken.UberAssistant.entity.Restaurant;
 import com.butterchicken.UberAssistant.repo.RestaurantRepo;
@@ -35,9 +36,17 @@ public class RestaurantServiceImpl implements RestaurantService {
         return Collections.emptyList();
     }
 
+    @Override
+    public Optional<Restaurant> findById(Integer restaurantId) {
+        return restaurantRepo.findById(restaurantId);
+    }
+
     private RestaurantDto getRestaurantDetails(Restaurant restaurant) {
         RestaurantDto restaurantDto = new RestaurantDto();
         BeanUtils.copyProperties(restaurant, restaurantDto);
+        restaurantDto.setLocation(new RideDto.LatLong());
+        restaurantDto.getLocation().setLatitude(restaurant.getLatitude());
+        restaurantDto.getLocation().setLongitude(restaurant.getLongitude());
         List<Reservation> reservations = reservationService.getUpcomingRestaurantReservations(restaurant.getId());
         LocalDateTime currentTime = LocalDateTime.now();
         currentTime = currentTime.truncatedTo(ChronoUnit.HOURS).plusHours(1);

@@ -8,5 +8,5 @@ public interface RideService {
 
     List<RideDto> getRideHistory(Integer userId, Integer page, Integer size);
 
-    RideDto getSuggestedRide(Integer userId);
+    RideDto getSuggestedRide(Integer userId, Double currLat, Double currLong);
 }

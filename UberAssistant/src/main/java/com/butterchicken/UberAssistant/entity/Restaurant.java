@@ -20,6 +20,12 @@ public class Restaurant extends AbstractEntity{
     @Column(name = "open_time")
     private String openTime;
 
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
     @Column(name = "closing_time")
     private String closingTime;
 
@@ -31,4 +37,5 @@ public class Restaurant extends AbstractEntity{
 
     @Column(name = "res_tables")
     private Integer resTables;
+
 }

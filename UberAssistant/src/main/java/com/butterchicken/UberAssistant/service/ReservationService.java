@@ -10,4 +10,6 @@ public interface ReservationService {
     Reservation makeReservation(ReservationRequestDto reservationRequest);
 
     List<Reservation> getUpcomingRestaurantReservations(Integer restaurantId);
+
+    Reservation findNextReservationForUser(Integer userId);
 }

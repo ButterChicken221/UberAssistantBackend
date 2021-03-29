@@ -23,8 +23,8 @@ public class RideController {
     }
 
     @RequestMapping(value = "/suggest", method = RequestMethod.GET)
-    public RideDto suggestRide(@RequestParam Integer userId) {
-        return rideService.getSuggestedRide(userId);
+    public RideDto suggestRide(@RequestParam Integer userId, @RequestParam Double currLat, @RequestParam Double currLong) {
+        return rideService.getSuggestedRide(userId, currLat, currLong);
     }
 
 }
