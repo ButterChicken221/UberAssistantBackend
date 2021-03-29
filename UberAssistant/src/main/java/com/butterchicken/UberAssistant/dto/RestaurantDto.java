@@ -10,6 +10,8 @@ import java.util.List;
 @Data
 public class RestaurantDto {
 
+    private Integer id;
+
     private String name;
 
     private Double rating;
@@ -19,6 +21,8 @@ public class RestaurantDto {
     private String closingTime;
 
     private Integer costForOne;
+
+    private RideDto.LatLong location;
 
     private String imageUrl;
 

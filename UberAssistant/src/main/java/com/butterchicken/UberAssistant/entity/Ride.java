@@ -4,7 +4,7 @@ import com.butterchicken.UberAssistant.enums.CabType;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -30,10 +30,10 @@ public class Ride extends AbstractEntity{
     private Double fare;
 
     @Column(name = "start_time")
-    private Date startTime;
+    private LocalDateTime startTime;
 
     @Column(name = "end_time")
-    private Date endTime;
+    private LocalDateTime endTime;
 
     @Column(name = "cab_type")
     @Enumerated(EnumType.STRING)
