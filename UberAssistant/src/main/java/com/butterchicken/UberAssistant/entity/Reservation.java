@@ -3,6 +3,7 @@ package com.butterchicken.UberAssistant.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ public class Reservation extends AbstractEntity{
     private Integer restaurantId;
 
     @Column(name = "reservation_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime reservationTime;
 
 }
