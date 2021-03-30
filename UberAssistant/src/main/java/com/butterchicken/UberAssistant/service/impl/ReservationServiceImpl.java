@@ -33,8 +33,8 @@ public class ReservationServiceImpl implements ReservationService {
                 reservationRequest.getRestaurantId(), reservationRequest.getReservationTime()));
         if(reservation != null){
             Note note = new Note();
-            note.setSubject("Table reserved successfully");
-            note.setSubject("Navigate to Uber to book your ride!");
+            note.setSubject("Table reserved successfully!");
+            note.setContent("Navigate to Uber to book your ride!");
             note.setData(new HashMap<>());
             try {
                 firebaseMessagingService.sendNotification(note, defaultFirebaseToken);

@@ -13,10 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,15 +49,39 @@ public class RideServiceImpl implements RideService {
     @Override
     public RideDto getSuggestedRide(Integer userId, Double currLat, Double currLong) {
         Reservation reservation = reservationService.findNextReservationForUser(userId);
+        List<RideDto> rideHistory = getRideHistory(userId, 0, 15);
+        RideDto suggestedRide = getSuggestedRideParams(rideHistory, currLat, currLong);
         if(reservation != null && reservation.getReservationTime().isAfter(LocalDateTime.now()) && reservation.getReservationTime().isBefore(LocalDateTime.now().plusHours(6))){
             Optional<Restaurant> restaurant = restaurantService.findById(reservation.getRestaurantId());
             if(restaurant.isPresent()){
                 Integer fare = Math.abs(new Random().nextInt())%400;
                 fare = Math.max(fare, 400 - fare);
-                return RideDto.builder().source(new RideDto.LatLong(currLat, currLong)).destination(new RideDto.LatLong(restaurant.get().getLatitude(), restaurant.get().getLongitude())).startTime(LocalDateTime.now().plusMinutes(5)).fare((double)fare).cabTypeCode(CabType.GO.getCabTypeCode()).build();
+                return RideDto.builder().source(new RideDto.LatLong(currLat, currLong)).destination(new RideDto.LatLong(restaurant.get().getLatitude(), restaurant.get().getLongitude())).startTime(LocalDateTime.now().plusMinutes(5)).fare((double)fare).cabTypeCode(suggestedRide.getCabTypeCode()).build();
             }
         }
         return RideDto.builder().build();
+    }
+
+    private RideDto getSuggestedRideParams(List<RideDto> rideHistory, Double currLat, Double currLong) {
+        Integer suggestedCabTypeCode = getSuggestedCabTypeCode(rideHistory);
+        return RideDto.builder().cabTypeCode(suggestedCabTypeCode).build();
+    }
+
+    private Integer getSuggestedCabTypeCode(List<RideDto> rideHistory) {
+        Map<Integer, Integer> cabTypeCount = new HashMap<>();
+        Integer suggestedCabTypeCode = CabType.GO.getCabTypeCode();
+        Integer maxCount = 0;
+        Integer weight = 15;
+        for(RideDto e: rideHistory){
+            Integer currCount = cabTypeCount.getOrDefault(e.getCabTypeCode(), 0) + weight;
+            cabTypeCount.put(e.getCabTypeCode(), currCount);
+            weight--;
+            if(currCount > maxCount){
+                maxCount = currCount;
+                suggestedCabTypeCode = e.getCabTypeCode();
+            }
+        }
+        return suggestedCabTypeCode;
     }
 
 }
